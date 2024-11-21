@@ -21,7 +21,7 @@ public class Calculator extends JFrame {
         display.setPreferredSize(new Dimension(400, 100)); // Lebih besar
         display.setEditable(false);
         display.setHorizontalAlignment(JTextField.RIGHT);
-        display.setFont(new Font("Arial", Font.BOLD, 36)); // Font lebih besar
+        display.setFont(new Font("Arial", Font.BOLD, 30)); // Font lebih besar
         add(display, BorderLayout.NORTH);
 
         // Create button panel
