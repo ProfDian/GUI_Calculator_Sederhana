@@ -6,29 +6,45 @@ import java.awt.event.*;
 public class Calculator extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTextField display;
+    private JLabel operationSign;
+    private JLabel previousOperand;
     private double result = 0;
     private String lastCommand = "=";
     private boolean start = true;
 
     public Calculator() {
-        // Set up the frame
         setTitle("Calculator dengan GUI Sederhana");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Create display field - Increased size and font
         display = new JTextField("0");
         display.setPreferredSize(new Dimension(400, 100));
         display.setEditable(false);
         display.setHorizontalAlignment(JTextField.RIGHT);
         display.setFont(new Font("Arial", Font.BOLD, 31));
-        add(display, BorderLayout.NORTH);
+        
+        operationSign = new JLabel("");
+        operationSign.setHorizontalAlignment(JLabel.RIGHT);
+        operationSign.setFont(new Font("Arial", Font.PLAIN, 16));
+        
+        previousOperand = new JLabel("");
+        previousOperand.setHorizontalAlignment(JLabel.RIGHT);
+        previousOperand.setFont(new Font("Arial", Font.PLAIN, 16));
+        
+        JPanel displayPanel = new JPanel(new BorderLayout());
+        displayPanel.add(display, BorderLayout.CENTER);
+        
+        JPanel infoPanel = new JPanel(new BorderLayout());
+        infoPanel.add(previousOperand, BorderLayout.WEST);
+        infoPanel.add(operationSign, BorderLayout.EAST);
+        
+        displayPanel.add(infoPanel, BorderLayout.NORTH);
+        
+        add(displayPanel, BorderLayout.NORTH);
 
-        // Create button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(5, 4, 5, 5));
 
-        // Add buttons
         String[] buttonLabels = {
             "7", "8", "9", "/",
             "4", "5", "6", "*",
@@ -49,9 +65,8 @@ public class Calculator extends JFrame {
 
         add(buttonPanel, BorderLayout.CENTER);
         
-        // Set size and center the application
         setSize(400, 500);
-        setLocationRelativeTo(null); // Menempatkan di tengah layar
+        setLocationRelativeTo(null);
     }
 
     private class NumberListener implements ActionListener {
@@ -73,6 +88,8 @@ public class Calculator extends JFrame {
             if (command.equals("C")) {
                 result = 0;
                 display.setText("0");
+                operationSign.setText("");
+                previousOperand.setText("");
                 lastCommand = "=";
                 start = true;
                 return;
@@ -96,10 +113,14 @@ public class Calculator extends JFrame {
                     start = false;
                 } else {
                     lastCommand = command;
+                    operationSign.setText(command);
                 }
             } else {
-                calculate(Double.parseDouble(display.getText()));
+                double x = Double.parseDouble(display.getText());
+                previousOperand.setText(display.getText());
+                calculate(x);
                 lastCommand = command;
+                operationSign.setText(command);
                 start = true;
             }
         }
@@ -127,12 +148,18 @@ public class Calculator extends JFrame {
                     break;
                 case "=":
                     result = x;
+                    operationSign.setText("");
+                    previousOperand.setText("");
                     break;
                 case "log":
                     result = Math.log10(x);
+                    operationSign.setText("");
+                    previousOperand.setText("");
                     break;
                 case "^":
                     result = Math.pow(result, x);
+                    operationSign.setText("");
+                    previousOperand.setText("");
                     break;
             }
             display.setText("" + result);
