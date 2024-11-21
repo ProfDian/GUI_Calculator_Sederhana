@@ -12,16 +12,16 @@ public class Calculator extends JFrame {
 
     public Calculator() {
         // Set up the frame
-        setTitle("Calculator");
+        setTitle("Calculator dengan GUI Sederhana");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         // Create display field - Increased size and font
         display = new JTextField("0");
-        display.setPreferredSize(new Dimension(400, 100)); // Lebih besar
+        display.setPreferredSize(new Dimension(400, 100));
         display.setEditable(false);
         display.setHorizontalAlignment(JTextField.RIGHT);
-        display.setFont(new Font("Arial", Font.BOLD, 30)); // Font lebih besar
+        display.setFont(new Font("Arial", Font.BOLD, 31));
         add(display, BorderLayout.NORTH);
 
         // Create button panel
